@@ -1,6 +1,8 @@
 import Discord, { Channel, Client, Message, TextChannel } from "discord.js";
+import dotenv from "dotenv";
 import { start } from "./server";
 
+dotenv.config();
 const client: Client = new Discord.Client();
 
 const minutes: number = 1000 * 60;

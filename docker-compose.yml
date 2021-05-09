@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  bot-server:
+    build:
+      context: .
+    container_name: bot-server
+    image: bot-server
+    environment:
+      - TOKEN=${TOKEN}
+    ports:
+      - "3000:3000"

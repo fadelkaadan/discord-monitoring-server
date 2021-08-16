@@ -1,24 +1,16 @@
-import Discord, { Channel, Client, Message, TextChannel } from "discord.js";
-import AWS from "aws-sdk";
+import { Message } from "discord.js";
 import dotenv from "dotenv";
 import { start } from "./server";
+import discordClient from "./discordClient";
+import docClient from "./docClient";
 
 dotenv.config();
-AWS.config.update({
-  region: process.env.AWS_DEFAULT_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
 
-// Create the service used to connect to DynamoDB
-const docClient = new AWS.DynamoDB.DocumentClient();
-const client: Client = new Discord.Client();
+discordClient.on("ready", () => {
+  console.log(`Logged in as ${discordClient.user?.tag}!`);
 
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user?.tag}!`);
-
-  client.on("message", (msg: Message) => {
-    if (msg.author !== client.user) {
+  discordClient.on("message", (msg: Message) => {
+    if (msg.author !== discordClient.user) {
       const params = {
         TableName: "channel-messages",
         Item: {
@@ -45,4 +37,4 @@ client.on("ready", () => {
 });
 
 start();
-client.login(process.env.TOKEN);
+discordClient.login(process.env.TOKEN);

@@ -1,12 +1,17 @@
 import express, { Request, Response, Express } from "express";
+import dotenv from "dotenv";
 import cors from "cors";
-
-import channelRoute from "./routes/channel.route";
+import messagesRoute from "./routes/messages.route";
+import flaggedMessagesRoute from "./routes/flaggedMessages.route";
+import usersRoute from "./routes/users.route";
+dotenv.config();
 
 const server: Express = express();
 server.use(cors());
 
-server.use("/messages", channelRoute);
+server.use("users/banned", usersRoute);
+server.use("/messages/flagged", flaggedMessagesRoute);
+server.use("/messages", messagesRoute);
 
 server.all("/", (req: Request, res: Response) => {
   res.send("Bot is running...");

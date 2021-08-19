@@ -1,40 +1,15 @@
 import { Message } from "discord.js";
-import dotenv from "dotenv";
 import { start } from "./server";
-import discordClient from "./discordClient";
-import docClient from "./docClient";
+import { discord } from "./providers/discord";
+import flaggedMessagesController from "./controllers/flaggedMessages.controller";
 
-dotenv.config();
+discord.client.on("ready", () => {
+  console.log(`Logged in as ${discord.client.user?.tag}!`);
 
-discordClient.on("ready", () => {
-  console.log(`Logged in as ${discordClient.user?.tag}!`);
-
-  discordClient.on("message", (msg: Message) => {
-    if (msg.author !== discordClient.user) {
-      const params = {
-        TableName: "channel-messages",
-        Item: {
-          id: msg.id,
-          author: msg.author.username,
-          message: msg.content,
-          createdTimestamp: msg.createdTimestamp,
-        },
-      };
-
-      console.log("Adding a new item...");
-      docClient.put(params, function (err, data) {
-        if (err) {
-          console.error(
-            "Unable to add item. Error JSON:",
-            JSON.stringify(err, null, 2)
-          );
-        } else {
-          console.log("Added item:", JSON.stringify(data, null, 2));
-        }
-      });
-    }
+  discord.client.on("message", (msg: Message) => {
+    flaggedMessagesController.addFlaggedMessage(msg);
   });
 });
 
 start();
-discordClient.login(process.env.TOKEN);
+discord.client.login(process.env.TOKEN);

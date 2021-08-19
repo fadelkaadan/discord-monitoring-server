@@ -1,4 +1,4 @@
-import { TextChannel, Message } from "discord.js";
+import { Message } from "discord.js";
 import { Request, Response } from "express";
 import { checkMessage } from "../utils/checkMessage";
 import { discord } from "../providers/discord";

@@ -26,9 +26,18 @@ class flaggedMessagesController {
     try {
       const deletedMessage = discord.deleteMessage(req.params.id);
 
-      res.status(200).json({
-        status: "successfully deleted",
-        data: deletedMessage,
+      const params = {
+        TableName: "flagged-messages",
+        Key: {
+          "id": req.params.id,
+        },
+      };
+
+      docClient.delete(params, (err, data) => {
+        res.status(200).json({
+          status: "successfully deleted",
+          data: deletedMessage,
+        });
       });
     } catch (error) {
       res.status(400).json({ error });
@@ -42,7 +51,7 @@ class flaggedMessagesController {
         Item: {
           id: msg.id,
           author: msg.author.username,
-          message: msg.content,
+          content: msg.content,
           createdTimestamp: msg.createdAt.toString(),
         },
       };

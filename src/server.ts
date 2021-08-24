@@ -4,14 +4,12 @@ import cors from "cors";
 import messagesRoute from "./routes/messages.route";
 import flaggedMessagesRoute from "./routes/flaggedMessages.route";
 import censoredWordsRoute from "./routes/censoredWords.route";
-import usersRoute from "./routes/users.route";
 dotenv.config();
 
 const server: Express = express();
 server.use(cors());
 server.use(express.json());
 
-server.use("/users/banned", usersRoute);
 server.use("/messages/flagged", flaggedMessagesRoute);
 server.use("/messages", messagesRoute);
 server.use("/words", censoredWordsRoute);

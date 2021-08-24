@@ -11,7 +11,6 @@ class censoredWordsController {
       };
 
       docClient.scan(params, (err, data) => {
-        console.log(err);
         res.status(200).json({
           status: "successfully fetched",
           data,
@@ -35,7 +34,7 @@ class censoredWordsController {
       docClient.put(params, (err, data) => {
         res.status(200).json({
           status: "successfully posted",
-          data,
+          data: params.Item,
         });
       });
     } catch (error) {
@@ -45,11 +44,18 @@ class censoredWordsController {
 
   deleteCensoredWord = async (req: Request, res: Response) => {
     try {
-      const deletedWord = discord.deleteMessage(req.params.id);
+      const params = {
+        TableName: "censored-words",
+        Key: {
+          id: req.params.id,
+        },
+      };
 
-      res.status(200).json({
-        status: "successfully deleted",
-        data: deletedWord,
+      docClient.delete(params, (err, data) => {
+        res.status(200).json({
+          status: "successfully deleted",
+          data: data,
+        });
       });
     } catch (error) {
       res.status(400).json({ error });

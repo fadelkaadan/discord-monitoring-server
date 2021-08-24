@@ -24,7 +24,7 @@ class flaggedMessagesController {
 
   deleteFlaggedMessage = async (req: Request, res: Response) => {
     try {
-      const deletedMessage = discord.deleteMessage(req.params.id);
+      discord.deleteMessage(req.params.id);
 
       const params = {
         TableName: "flagged-messages",
@@ -36,7 +36,7 @@ class flaggedMessagesController {
       docClient.delete(params, (err, data) => {
         res.status(200).json({
           status: "successfully deleted",
-          data: deletedMessage,
+          data: data,
         });
       });
     } catch (error) {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { discord } from "../providers/discord";
-import docClient from "../docClient";
 import { v4 as uuidv4 } from "uuid";
+import docClient from "../docClient";
 
 class censoredWordsController {
   getCensoredWords = async (req: Request, res: Response) => {
@@ -10,7 +10,8 @@ class censoredWordsController {
         TableName: "censored-words",
       };
 
-      docClient.query(params, (err, data) => {
+      docClient.scan(params, (err, data) => {
+        console.log(err);
         res.status(200).json({
           status: "successfully fetched",
           data,
@@ -31,16 +32,16 @@ class censoredWordsController {
     };
 
     console.log("Adding a new item to the censored words list...");
-    docClient.put(params, (err, data) => {
-      if (err) {
-        console.error(
-          "Unable to add item. Error JSON:",
-          JSON.stringify(err, null, 2)
-        );
-      } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
-      }
-    });
+    try {
+      docClient.put(params, (err, data) => {
+        res.status(200).json({
+          status: "successfully posted",
+          data,
+        });
+      });
+    } catch (error) {
+      res.status(404).json({ error });
+    }
   };
 
   deleteCensoredWord = async (req: Request, res: Response) => {

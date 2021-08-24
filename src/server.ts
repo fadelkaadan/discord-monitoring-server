@@ -9,6 +9,7 @@ dotenv.config();
 
 const server: Express = express();
 server.use(cors());
+server.use(express.json());
 
 server.use("/users/banned", usersRoute);
 server.use("/messages/flagged", flaggedMessagesRoute);

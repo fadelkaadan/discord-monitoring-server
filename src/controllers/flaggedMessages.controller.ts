@@ -11,7 +11,7 @@ class flaggedMessagesController {
         TableName: "flagged-messages",
       };
 
-      docClient.query(params, (err, data) => {
+      docClient.scan(params, (err, data) => {
         res.status(200).json({
           status: "successfully fetched",
           data,
@@ -43,19 +43,18 @@ class flaggedMessagesController {
           id: msg.id,
           author: msg.author.username,
           message: msg.content,
-          createdTimestamp: msg.createdTimestamp,
+          createdTimestamp: msg.createdAt.toString(),
         },
       };
 
-      console.log("Adding a new item to flagged messages...");
-      docClient.put(params, (err, data) => {
+      docClient.put(params, function (err, data) {
         if (err) {
           console.error(
             "Unable to add item. Error JSON:",
             JSON.stringify(err, null, 2)
           );
         } else {
-          console.log("Added item:", JSON.stringify(data, null, 2));
+          console.log("Added a new item to flagged messages");
         }
       });
     }

@@ -7,7 +7,7 @@ class messagesController {
       const messages = await discord.getMessages();
 
       res.status(200).json({
-        status: "successfully fetched",
+        status: "successfully fetched wtf",
         data: messages,
       });
     } catch (error) {

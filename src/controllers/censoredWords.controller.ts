@@ -24,14 +24,13 @@ class censoredWordsController {
 
   addCensoredWord = async (req: Request, res: Response) => {
     const params = {
-      TableName: "flagged-messages",
+      TableName: "censored-words",
       Item: {
         id: uuidv4(),
         word: req.body.word,
       },
     };
 
-    console.log("Adding a new item to the censored words list...");
     try {
       docClient.put(params, (err, data) => {
         res.status(200).json({

@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import messagesRoute from "./routes/messages.route";
 import flaggedMessagesRoute from "./routes/flaggedMessages.route";
-import censoredWordsRoute from "./routes/censoredWords.route";
 dotenv.config();
 
 const server: Express = express();
@@ -12,7 +11,6 @@ server.use(express.json());
 
 server.use("/messages/flagged", flaggedMessagesRoute);
 server.use("/messages", messagesRoute);
-server.use("/words", censoredWordsRoute);
 
 server.all("/", (req: Request, res: Response) => {
   res.send("Bot is running...");

@@ -12,4 +12,4 @@ discord.client.on("ready", () => {
 });
 
 start();
-discord.client.login(process.env.TOKEN);
+discord.client.login("ODQwMDM3ODM2MDExMDc3NjYz.YJSYMw.IRmNlyaud7Z9LrEwiaUD0dIWxvg");

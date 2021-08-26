@@ -5,9 +5,7 @@ class DiscordHandler {
 
   getMessages = async () => {
     try {
-      const channel = await this.client.channels.fetch(
-        `${process.env.CHANNEL_ID}`
-      );
+      const channel = await this.client.channels.fetch("879761200492204074");
       const textChannel: TextChannel = <TextChannel>channel;
       const messages = await textChannel.messages.fetch({ limit: 25 });
 
@@ -19,9 +17,7 @@ class DiscordHandler {
 
   deleteMessage = async (id: string) => {
     try {
-      const channel = await this.client.channels.fetch(
-        `${process.env.CHANNEL_ID}`
-      );
+      const channel = await this.client.channels.fetch("879761200492204074");
 
       const textChannel: TextChannel = <TextChannel>channel;
       const deletedMessage = await textChannel.messages.delete(id);

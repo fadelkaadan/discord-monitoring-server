@@ -9,13 +9,7 @@ before_script:
   - npm install
 
 stages:
-  - test
   - deploy
-  
-test:
-  stage: test
-  script:
-    - npm run test
 
 deployToAWS:
   only:
@@ -23,5 +17,3 @@ deployToAWS:
   stage: deploy
   script:
     - bash deploy/deploy.sh
-  allow_failure: true
-

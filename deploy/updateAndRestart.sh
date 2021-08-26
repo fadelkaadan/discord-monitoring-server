@@ -21,7 +21,7 @@ npm install pm2 -g
 # starting pm2 daemon
 pm2 status
 
-cd /home/ubuntu/ci_cd_demo
+cd /home/ubuntu/discord-monitoring-server
 
 #install npm packages
 echo "Running npm install"

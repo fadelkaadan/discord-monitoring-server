@@ -5,10 +5,22 @@ cache:
     - node_modules/
 
 before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - npm install
+
+stages:
+  - test
+  - deploy
   
 test:
+  stage: test
   script:
     - npm run test
 
+deployToAWS:
+  only:
+    - master
+  stage: deploy
+  script:
+    - bash deploy/deploy.sh
 

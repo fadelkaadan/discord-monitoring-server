@@ -1,15 +1,11 @@
-image: node:latest
-
-cache:
-  paths:
-    - node_modules/
+image: node:8.9.0
 
 before_script:
   - npm install
 
 stages:
   - test
-
+  
 test:
   stage: test
   script:

@@ -19,7 +19,7 @@ test:
 
 deployToAWS:
   only:
-    - master
+    - main
   stage: deploy
   script:
     - bash deploy/deploy.sh

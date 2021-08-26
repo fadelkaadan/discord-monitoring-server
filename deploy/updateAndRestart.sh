@@ -3,7 +3,7 @@
 set -e
 
 # Delete the old repo
-rm -rf /home/ubuntu/ci_cd_demo/
+rm -rf /home/ubuntu/discord-monitoring-server/
 
 # clone the repo again
 git clone https://gitlab.com/fadelkaadan/discord-monitoring-server.git

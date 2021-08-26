@@ -7,6 +7,10 @@ cache:
 before_script:
   - npm install
 
+stages:
+  - test
+
 test:
+  stage: test
   script:
     - npm run test

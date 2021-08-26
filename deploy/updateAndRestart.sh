@@ -8,7 +8,7 @@ rm -rf /home/ubuntu/ci_cd_demo/
 # clone the repo again
 git clone https://gitlab.com/fadelkaadan/discord-monitoring-server.git
 
-source /home/ubuntu/.nvm/nvm.sh
+export PATH=/home/ubuntu/node/bin:$PATH
 
 # stop the previous pm2
 pm2 kill

@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { Request, Response } from "express";
-import { checkMessage } from "../utils/checkMessage";
 import { discord } from "../providers/discord";
 import docClient from "../docClient";
 
@@ -29,7 +28,7 @@ class flaggedMessagesController {
       const params = {
         TableName: "flagged-messages",
         Key: {
-          "id": req.params.id,
+          id: req.params.id,
         },
       };
 
@@ -45,28 +44,26 @@ class flaggedMessagesController {
   };
 
   addFlaggedMessage = async (msg: Message) => {
-    if (msg.author !== discord.client.user && checkMessage(msg.content)) {
-      const params = {
-        TableName: "flagged-messages",
-        Item: {
-          id: msg.id,
-          author: msg.author.username,
-          content: msg.content,
-          createdTimestamp: msg.createdAt.toString(),
-        },
-      };
+    const params = {
+      TableName: "flagged-messages",
+      Item: {
+        id: msg.id,
+        author: msg.author.username,
+        content: msg.content,
+        createdTimestamp: msg.createdAt.toString(),
+      },
+    };
 
-      docClient.put(params, function (err, data) {
-        if (err) {
-          console.error(
-            "Unable to add item. Error JSON:",
-            JSON.stringify(err, null, 2)
-          );
-        } else {
-          console.log("Added a new item to flagged messages");
-        }
-      });
-    }
+    docClient.put(params, function (err, data) {
+      if (err) {
+        console.error(
+          "Unable to add item. Error JSON:",
+          JSON.stringify(err, null, 2)
+        );
+      } else {
+        console.log("Added a new item to flagged messages");
+      }
+    });
   };
 }
 

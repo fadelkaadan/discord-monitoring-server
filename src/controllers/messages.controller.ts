@@ -27,6 +27,15 @@ class messagesController {
       res.status(400).json({ error });
     }
   };
+
+  deleteHarmfulMessage = async (messageId: string) => {
+    try {
+      discord.deleteMessage(messageId);
+      console.log("Harmful message deleted successfully");
+    } catch (error) {
+      console.error("Unable to delete harmful message");
+    }
+  };
 }
 
 export default new messagesController();

@@ -10,10 +10,7 @@ class CensoredWords {
       };
 
       docClient.scan(params, (err, data) => {
-        res.status(200).json({
-          status: "successfully fetched",
-          data,
-        });
+        res.status(200).json(data.Items);
       });
     } catch (error) {
       res.status(404).json({ error });
@@ -21,16 +18,36 @@ class CensoredWords {
   };
 
   createOne = async (req: Request, res: Response) => {
+    const newId = uuidv4();
     const params = {
       TableName: "censored-words",
       Item: {
-        id: uuidv4(),
+        id: newId,
         word: req.body.word,
       },
     };
 
     try {
       docClient.put(params, (err, data) => {
+        res.status(200).json({
+          id: newId,
+          word: req.body.word,
+        });
+      });
+    } catch (error) {
+      res.status(404).json({ error });
+    }
+  };
+
+  getOne = async (req: Request, res: Response) => {
+    console.log(req.params);
+    var params = {
+      TableName: "censored-words",
+      Key: { KEY_NAME: req.params.id },
+    };
+
+    try {
+      docClient.get(params, function (err, data) {
         res.status(200).json({
           status: "successfully added",
           data,

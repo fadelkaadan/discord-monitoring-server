@@ -10,7 +10,7 @@ const server: Express = express();
 server.use(cors());
 server.use(express.json());
 
-server.use("/messages/flagged", flaggedMessagesRoute);
+server.use("/flaggedMessages", flaggedMessagesRoute);
 server.use("/messages", messagesRoute);
 server.use("/censoredWords", censoredWordsRoute);
 
@@ -19,7 +19,7 @@ server.all("/", (req: Request, res: Response) => {
 });
 
 export function start() {
-  server.listen(4000, () => {
+  server.listen(process.env.PORT, () => {
     console.log("Server is ready...");
   });
 }

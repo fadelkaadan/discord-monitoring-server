@@ -11,10 +11,7 @@ class flaggedMessagesController {
       };
 
       docClient.scan(params, (err, data) => {
-        res.status(200).json({
-          status: "successfully fetched",
-          data,
-        });
+        res.status(200).json(data.Items);
       });
     } catch (error) {
       res.status(404).json({ error });
@@ -23,7 +20,6 @@ class flaggedMessagesController {
 
   deleteFlaggedMessage = async (req: Request, res: Response) => {
     try {
-      discord.deleteMessage(req.params.id);
 
       const params = {
         TableName: "flagged-messages",

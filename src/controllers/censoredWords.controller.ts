@@ -40,7 +40,6 @@ class CensoredWords {
   };
 
   getOne = async (req: Request, res: Response) => {
-    console.log(req.params);
     var params = {
       TableName: "censored-words",
       Key: { KEY_NAME: req.params.id },
@@ -78,5 +77,19 @@ class CensoredWords {
     }
   };
 }
+
+export const getCensoredWords = (callback: any) => {
+  try {
+    const params = {
+      TableName: "censored-words",
+    };
+
+    docClient.scan(params, (err, data) => {
+      callback(data.Items);
+    });
+  } catch (error) {
+    console.error("ERROR");
+  }
+};
 
 export default new CensoredWords();

@@ -9,7 +9,7 @@ const seperateSentence = (content: string): string[] => {
 
 export const isMessageHarmful = (
   content: string,
-  bannedWords: string[]
+  bannedWords: { id: string; word: string }[]
 ): STATUS_ENUM => {
   const wordsInContent = seperateSentence(content);
   let status = STATUS_ENUM.SAFE;
@@ -17,7 +17,7 @@ export const isMessageHarmful = (
   for (const bannedWord of bannedWords) {
     for (const word of wordsInContent) {
       const similarityRate = stringSimilarity.compareTwoStrings(
-        bannedWord,
+        bannedWord.word,
         word
       );
       if (similarityRate >= 0.9) {

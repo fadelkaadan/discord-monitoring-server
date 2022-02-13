@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { Request, Response } from "express";
-import { discord } from "../providers/discord";
 import docClient from "../docClient";
 
 class flaggedMessagesController {

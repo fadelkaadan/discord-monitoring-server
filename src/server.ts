@@ -4,9 +4,12 @@ import cors from "cors";
 import messagesRoute from "./routes/messages.route";
 import flaggedMessagesRoute from "./routes/flaggedMessages.route";
 import censoredWordsRoute from "./routes/censoredWords.route";
+import MonitorSys from "./providers/monitoringSys";
 dotenv.config();
 
 const server: Express = express();
+export const monitorSys = new MonitorSys();
+
 server.use(cors());
 server.use(express.json());
 

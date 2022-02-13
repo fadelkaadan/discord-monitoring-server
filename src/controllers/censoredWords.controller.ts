@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import docClient from "../docClient";
 import { v4 as uuidv4 } from "uuid";
+import { monitorSys } from "../server";
 
-class CensoredWords {
+class CensoredWordsController {
   getAll = async (req: Request, res: Response) => {
     try {
       const params = {
@@ -19,20 +20,19 @@ class CensoredWords {
 
   createOne = async (req: Request, res: Response) => {
     const newId = uuidv4();
+    const newWord = {
+      id: newId,
+      word: req.body.word,
+    };
     const params = {
       TableName: "censored-words",
-      Item: {
-        id: newId,
-        word: req.body.word,
-      },
+      Item: newWord,
     };
 
     try {
       docClient.put(params, (err, data) => {
-        res.status(200).json({
-          id: newId,
-          word: req.body.word,
-        });
+        monitorSys.addNewWord(newWord);
+        res.status(200).json(newWord);
       });
     } catch (error) {
       res.status(404).json({ error });
@@ -67,6 +67,7 @@ class CensoredWords {
       };
 
       docClient.delete(params, (err, data) => {
+        monitorSys.removeWord(req.params.id);
         res.status(200).json({
           status: "successfully deleted",
           data: data,
@@ -92,4 +93,4 @@ export const getCensoredWords = (callback: any) => {
   }
 };
 
-export default new CensoredWords();
+export default new CensoredWordsController();

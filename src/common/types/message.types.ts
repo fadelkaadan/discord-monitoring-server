@@ -3,3 +3,8 @@ export enum STATUS_ENUM {
   FLAG,
   HARMFUL,
 }
+
+export interface IBannedWord {
+  id: string;
+  word: string;
+}

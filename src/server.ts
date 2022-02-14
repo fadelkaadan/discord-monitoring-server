@@ -18,7 +18,7 @@ server.use("/messages", messagesRoute);
 server.use("/censoredWords", censoredWordsRoute);
 
 server.all("/", (req: Request, res: Response) => {
-  res.send("Bot is running 2...");
+  res.send("Bot is running 3...");
 });
 
 export function start() {

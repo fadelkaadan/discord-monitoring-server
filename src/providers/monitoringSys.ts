@@ -9,20 +9,17 @@ class MonitorSys {
   constructor() {
     getCensoredWords((data: any) => {
       this.bannedWords = data;
-      console.log(this.bannedWords);
     });
   }
 
   addNewWord = (word: IBannedWord) => {
     this.bannedWords.push(word);
     console.log("ADD NEW BANNED WORD");
-    console.log(this.bannedWords);
   };
 
   removeWord = (wordId: string) => {
     this.bannedWords = this.bannedWords.filter((word) => word.id !== wordId);
     console.log("REMOVE A BANNED WORD");
-    console.log(this.bannedWords);
   };
 
   getScannedMessageStatus = (content: string) => {

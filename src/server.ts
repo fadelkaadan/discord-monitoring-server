@@ -22,7 +22,7 @@ server.all("/", (req: Request, res: Response) => {
 });
 
 export function start() {
-  server.listen(process.env.PORT, () => {
+  server.listen(4000, () => {
     console.log("Server is ready...");
   });
 }
